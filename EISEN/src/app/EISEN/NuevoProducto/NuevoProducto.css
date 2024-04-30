@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;700&display=swap');
+
+* {
+  font-family: Urbanist;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.Hoja-secundaria{
+  display: grid;
+  margin: 0% 5% 1% 15%;
+}
+
+
+.Hoja-secundaria label{
+  font-weight: bold !important;
+}
+
+.justificacion{
+  display: grid;
+  margin: 2% 0 0 15%;
+}
+
+.Nombres2{
+  position: relative;
+  margin-top: 6px;
+  margin-bottom:15px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 2px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.NFecha{
+  color: black;
+  margin-bottom: 0px;
+  display: flex;
+  font-weight: bold;
+}
+
+.Fecha{
+  border: solid 1px transparent;
+  border-bottom: 2px solid #ccc;
+  height:50%;
+}
+.col-sm-3{
+  margin-left: 25px;
+}
+
+.Fecha1{
+  height:40%;
+  margin-top: 5px;
+  border: 2px solid #ccc;
+
+}
+
+.textarea{
+  display: flex;
+  justify-content: center;
+  margin: 0 10px 10px 10px;
+  width: 80%;
+  position: relative;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.responsable{
+  color: black;
+}
+
+
+
+
+
+.Agregar{
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+}
+
+ .Agregar button{
+  border: 2px solid #193665;
+  background-color: #193665;
+  border-radius: 0.9em;
+  padding: 0.8em 1.2em 0.8em 1em;
+  transition: all ease-in-out 0.2s;
+  font-size: 16px;
+ }
+ 
+ .Agregar button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
+ }
+ 
+ .Agregar button:hover {
+  background-color: #274c88;
+ }
+
+
+

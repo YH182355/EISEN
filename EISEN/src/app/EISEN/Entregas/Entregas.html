@@ -1,0 +1,210 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<section>
+
+    <h1 style="text-align: center; margin: 2% 0 2% 0;">Entregas</h1>
+
+    <div class="search-container">
+        <input style="width:10%;"  (change)="filtrarDatos()"  [(ngModel)]="Fecha1" type="date" id="search-date" title="Fecha">
+        
+        <input  style="width:10%;"   (change)="filtrarDatos()"  [(ngModel)]="Fecha2" type="date" id="search-date" title="Fecha">
+
+        <button class="reiniciar" (click)="buscarEntregasPorRango(Fecha1, Fecha2)">
+            <p>Filtrar Fechas</p>
+        </button>
+
+
+        <select style="margin-right:1%;" [(ngModel)]="CategoriaOpcion" (change)="filtrarDatos()" title="Categoría" id="Categoria" class="custom-select">
+            <option class="flip-card__input" value="Categoria" disabled selected>Categoria</option>
+            <option value="Insumos">Insumos</option>
+            <option value="Almacén">Almacén</option>
+            <option value="Papeleria">Papeleria</option>
+            <option value="Limpieza">Limpieza</option>
+            <option value="Mobiliario">Mobiliario</option>
+            <option value="Uniformes">Uniformes</option>
+            <option value="Telefonia">Telefonia</option>
+            <option value="Equipos Electronicos">Equipos Electrónicos</option>
+            <option value="Medicamentos">Medicamentos</option>
+        </select>
+
+        <input [(ngModel)]="Buscar" type="text" id="search-bar" placeholder="Buscar..." >
+        <button for="search-bar" class="search-button" type="button" (click)="filtrarDatos()">Buscar</button>
+
+        <button class="reiniciar" (click)="VaciarFiltros()">
+            <p>Vaciar Filtros</p>
+        </button>
+    </div>
+
+    <div class="principal">
+
+        <table class="tablefixhead">
+            <thead>
+                <tr>
+                    <th class="esquina-izq">Nombre del Producto</th>
+                    <th>Cantidad Recibida </th>
+                    <th>Unidad</th>
+                    <th>Responsable</th>
+                    <th>Recibe</th>
+                    <th>Fecha de entrega</th>
+                    <th class="esquina-der">Acciones</th>
+                </tr>
+            </thead>
+            <ng-container *ngFor="let x of Mucho">
+                <tr>
+                    <td>{{x.Producto.Nombre}}</td>
+                    <td>{{x.Cantidad}}</td>
+                    <td>{{x.Producto.Unidad}}</td>
+                    <td>{{x.Responsable}}</td>
+                    <td>{{x.Recibe}}</td>
+                    <td>{{x.FechaEntrega}}</td>
+                    <td>
+                        <Button (click)="abrirEntrega(x)"
+                            style="border: none; margin-left: 10%; background-color: transparent;"><img
+                                src="https://i.imgur.com/mYM4yD6.png" alt="sd"></Button>
+                        <Button style="border: none; margin-left: 10%; background-color: transparent;"
+                            (click)="borrar(x)"><img src="https://i.imgur.com/tuWOvO7.png" alt=""></Button>
+                    </td>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+
+    <div class="Agregar">
+        <button (click)="pdf()">
+            <span>
+                Convertir PDF
+            </span>
+        </button>
+    </div>
+
+    <br><br><br>
+
+    <div id="elden">
+        <div class="container" style="margin: auto;">
+
+            <div class="banner">
+                <div class="row">
+
+                    <img class="logo" src="./../../../assets/EISEN/logo (2).png" alt="" style="width: 150px; height: 150px; margin-left: 50px;">
+
+                    <div class="col">
+                        <div id="tit" class="row">EISEN LOGÍSTICA S.A. DE C.V.</div>
+                        <div id="tit" class="row">SISTEMA DE GESTIÓN DE LA CALIDAD</div>
+                    </div>
+
+                    <div class="col col-lg-2">
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="principal1">
+
+                <table class="tablefixhead">
+                    <thead>
+                    <tr class="hola">
+                        <th class="na">Nombre del Producto</th>
+                        <th class="no">Cantidad</th>
+                        <th class="no">Unidad</th>
+                        <th class="no">Responsable</th>
+                        <th class="no">Persona o Área que recibe</th>
+                        <th class="no">Fecha de entrega</th>
+                        <th class="ne">Firma</th>
+                    </tr>
+                </thead>
+                <ng-container *ngFor="let x of Mucho">
+                    <tr class="adios">
+                        <td>{{x.Producto.Nombre}}</td>
+                        <td>{{x.Cantidad}}</td>
+                        <td>{{x.Producto.Unidad}}</td>
+                        <td>{{x.Responsable}}</td>
+                        <td>{{x.Recibe}}</td>
+                        <td>{{x.FechaEntrega}}</td>
+                        <td></td>
+                     </tr>
+                </ng-container>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<section id="myModal1" class="modal">
+    <section class="modal-content">
+        <span class="close" (click)="cerrarModal1()" style="color: red;">&times;</span>
+        <h2>Detalles de la Entrega</h2>
+
+        <div class="arriba">
+
+            <label for="nombre">Nombre del Producto:</label>
+            <input disabled [(ngModel)]="Recogido.Producto.Nombre" style="width: 100%;" type="text" id="nombre"
+                name="nombre"><br>
+
+
+        </div>
+
+        <div class="form">
+            <div>
+                <label for="unidad">Cantidad en el Inventario:</label>
+                <input disabled [(ngModel)]="Recogido.Producto.Cantidad" class="modal-opt" type="text" id="unidad"
+                    name="unidad"><br>
+
+                <label for="cantidad">Descripción del Producto:</label>
+                <input disabled [(ngModel)]="Recogido.Producto.Descripcion" class="modal-opt" type="text" id="cantidad"
+                    name="cantidad"><br>
+
+
+            </div>
+
+            <div>
+
+                <label for="cantidad">Categoria del Producto:</label>
+                <input disabled [(ngModel)]="Recogido.Producto.Categoria" class="modal-opt" type="text" id="cantidad"
+                    name="cantidad"><br>
+
+                <label for="proveedor">Marca del Producto:</label>
+                <input disabled [(ngModel)]="Recogido.Producto.Marca" class="modal-opt" type="text" id="proveedor"
+                    name="precio"><br>
+
+
+            </div>
+
+
+        </div>
+
+        <div class="form">
+            <div>
+                <label for="unidad">Responsable:</label>
+                <input disabled [(ngModel)]="Recogido.Responsable" class="modal-opt" type="text" id="unidad"
+                    name="unidad"><br>
+
+                <label for="cantidad">Fecha:</label>
+                <input disabled [(ngModel)]="Recogido.Fecha" class="modal-opt" type="date" id="cantidad"
+                    name="cantidad"><br>
+
+
+            </div>
+
+            <div>
+                <label for="precio">Recibe:</label>
+                <input disabled [(ngModel)]="Recogido.Recibe" class="modal-opt" type="text" id="precio"
+                    name="precio"><br>
+
+                <label for="proveedor">Fecha de Entrega:</label>
+                <input disabled [(ngModel)]="Recogido.FechaEntrega" class="modal-opt" type="date" id="proveedor"
+                    name="precio"><br>
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </section>

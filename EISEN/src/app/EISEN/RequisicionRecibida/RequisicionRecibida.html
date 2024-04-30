@@ -1,0 +1,111 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<section>
+
+  <h1 style="text-align: center; margin: 2% 0 0 0">Vista {{RequisicionCompra.Folio}}</h1>
+
+  <div class="Hoja-secundaria">
+
+    <div style="display: flex; margin-top: 30px">
+      <label style="margin-left: 5%" for="">Responsable:</label>
+      <input class="Nombres" type="text" [(ngModel)]="RequisicionCompra.NombreResponsable" disabled />
+
+
+      <label class="NFecha">Fecha:</label> <input class="Fecha" type="date" [(ngModel)]="FechaReq" disabled />
+    </div>
+
+    <div class="req">
+      <label style="margin-left: 5%" for="">Solicitante:</label>
+      <input class="Nombres2" type="text" [(ngModel)]="req.Solicitante" disabled />
+
+      <label style="margin-left: 15px" for="">Area:</label>
+      <select class="areas" type="text" [(ngModel)]="Selector" disabled>
+        <option class="responsable" value="Almacen Eisen" selected>Almacen Eisen</option>
+        <option class="responsable" value="Oficina Eisen">Oficina Eisen</option>
+        <option class="responsable" value="Oficina AGM">Oficina AGM</option>
+      </select>
+    </div>
+
+
+
+  </div>
+
+
+  <div class="principal">
+
+
+
+    <table class="tablefixhead">
+      <thead>
+        <tr>
+          <th class="esquina-izq">Producto</th>
+
+          <th>Cantidad</th>
+          <th>Cantidad Base</th>
+          <th>Unidad</th>
+          <th>Especificaciones</th>
+          <th>Marca</th>
+          <th>Precio</th>
+          <th>Proveedor</th>
+          <th>Estatus</th>
+          <th class="esquina-der">Fecha de Recibido</th>
+
+        </tr>
+      </thead>
+
+      <tr *ngFor="let item of RequisicionCompra.ProductosParaRequisicion">
+        <td class="izq">{{item.Nombre}}</td>
+        <td>{{item.Cantidad}}
+        </td>
+        <td>{{item.CantidadBase}}</td>
+        <td><input disabled style="border: solid 1px transparent; width: 70px;" type="text" [(ngModel)]="item.Unidad">
+        </td>
+        <td><textarea name="" id="" cols="30" rows="2" style="border: solid 1px transparent; resize: none;" type="text" [(ngModel)]="item.Especificaciones" ></textarea></td>
+
+        <td>{{item.Marca}}</td>
+        <td>${{item.Precio}}</td>
+        <td>{{item.Proveedor}}</td>
+        <!-- <td>{{item.Estatus}}</td> -->
+        <td>
+          <select class="Estatus" type="text" [(ngModel)]="item.Estatus" disabled>
+            <option class="responsable" value="Pendiente" disabled>Pendiente</option>
+            <option class="responsable" value="No Aceptado" disabled>No Aceptado</option>
+            <option class="responsable" value="Aceptado" disabled>Aceptado</option>
+            <option class="responsable" value="Pagado">Pagado</option>
+            <option class="responsable" value="Recibido">Recibido</option>
+          </select>
+        </td>
+        <td class="der"><input class="Fecha-pago" type="date" id="Fecha-pago" name="Fecha-pago" [(ngModel)]="item.FechaRecibido" disabled></td>
+      </tr>
+
+    </table>
+
+
+
+  </div>
+
+  <div class="Total-main">
+    <label style="margin-left: 5%" for="">Total:</label>
+    <input class="Total" type="text" [(ngModel)]="req.CostoTotal" disabled>
+  </div>
+
+
+  <div class="container" style="margin-left:auto; margin-right: auto !important; width: 100% !important;">
+    <div class="clearfix" style="margin-top: 1%;"></div>
+    <div class="form-group col-sm-12" style="margin-top: 1%;max-height:200px;overflow-y:scroll;"></div>
+    <label for="" class="col-form-label">Comentarios:</label>
+    <div class="input-group-text" *ngFor="let x of RequisicionCompra.Comentarios"> 
+      <span class="input-group" id="basic-addon1">{{x.User}} </span>
+      <textarea class="form-control" type="text" rows="1" name="" id="" placeholder="texto" #comenManiobra disabled>{{x.Comentario}}</textarea>
+      <span class="input-group" id="basic-addon1">{{x.Fecha}} </span>
+      <span class="input-group" id="basic-addon1">  {{x.Estatus}} </span>
+    </div>
+    <div class="clearfix" style="margin-top: 2%;"></div>
+  </div>
+
+
+
+
+
+
+</section>

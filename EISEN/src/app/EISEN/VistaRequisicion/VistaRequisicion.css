@@ -1,0 +1,409 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;700&display=swap');
+
+* {
+  font-family: Urbanist;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.principal{
+    overflow-y:scroll; 
+    max-height: 40%;  
+    margin-left: 10%;
+    margin-right: 10%;
+    overflow-y: auto;
+    max-height: 450px;
+}
+
+
+
+
+.tablefixhead thead th{
+    position: sticky ; top :0;
+}
+
+
+th, td {
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+    text-align: center;
+}
+
+td {
+     border-block-end: solid 1px rgba(0, 0, 0, 0.199);
+}
+
+.der{
+  border-right: solid 1px rgba(0, 0, 0, 0.199);
+}
+
+.izq{
+  border-left: solid 1px rgba(0, 0, 0, 0.199);
+}
+
+.esquina-izq{
+    border-top-left-radius: 10px;
+}
+.esquina-der{
+    border-top-right-radius: 10px;
+}
+
+th {
+    background-color: #193665;
+    color: #fff;
+}
+
+tr:nth-child(-n) {
+    background-color: #F2F2F2;
+}
+
+
+/* ----------------------------Barra de Busqueda------------------------------ */
+.search-container {
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+}
+
+#search-bar {
+    padding: 5px;
+    margin: 20px 0 20px 25%;
+    font-size: 16px;
+    border: solid 1px grey;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    width: 40%;
+    border: 2px solid #ccc;
+    max-height: 300px; /* Ajusta esto según tus necesidades */
+  overflow-y: auto;
+}
+
+.search-button {
+    padding:5.5px 20px;
+    font-size: 16px;
+    background-color: #193665;
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+
+
+.search-results {
+  position: relative;
+  width: 80%;
+  background-color: white;
+  color: #000000;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1; /* Para que los resultados estén por encima del contenido */
+  max-height: 300px; /* Ajusta esto según tus necesidades */
+  overflow-y: auto; /* Agrega una barra de desplazamiento si hay demasiados resultados */
+  width: 40%;
+  top: -22px;
+  margin:0 25% 0 25%;
+  outline:none;
+}
+
+.pnombre{
+  width: 100%;
+  display: flex;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  cursor: pointer;
+  justify-content: flex-start;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  line-height: normal;
+  overflow: visible;
+}
+
+.search-button:hover {
+    background-color: #324768;
+}
+
+
+  /* -------------------------selector-------------------------------------- */
+  #Categoria{
+    background-color: #193665;
+    color: #fff;
+    width: 8%;
+    position: relative;
+    right: 5%;
+    border-radius: 5%;
+    text-align: center;
+  }
+
+  #Categoria option{
+    color: black;
+  }
+
+  #Categoria option.flip-card__input{
+    color: transparent;
+  }
+
+  .reiniciar{
+    width: 8%;
+    background-color: #193665;
+    color: white;
+    border: 1px solid #fff;
+    margin-left: 8%;
+    border-radius: 5%;
+  }
+
+  .Hoja-secundaria label{
+    font-weight: bold !important;
+  }
+
+  .reiniciar:hover{
+    background-color: #324768;
+  }
+
+  .custom-select {
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* Estilos para las opciones */
+.custom-select option {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+.req{
+  display: flex;
+  margin-top: 5px;
+}
+
+.NFecha{
+  color: black;
+  margin-bottom: 0px;
+  display: flex;
+  font-weight: bold;
+}
+
+.Fecha{
+  border: solid 1px transparent;
+  border-bottom: 2px solid #ccc;
+  margin-left: 25px;
+  height:70%;
+  width: 15%;
+}
+
+.Hoja-secundaria{
+  display: grid;
+  margin: 0% 10% 1% 10%;
+}
+
+.Nombres{
+  margin: 0 10px 10px 10px;
+  width: 50%;
+  position: relative;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 2px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.Nombres2{
+    margin: 0 0 10px 24px;
+    width: 50%;
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 2px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+.areas{
+    margin: 0 0px 10px 25px;
+    width: 20%;
+  position: relative;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.textarea{
+    display: flex;
+    justify-content: center;
+    margin: 0 10px 10px 10px;
+    width: 80%;
+  position: relative;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.responsable{
+  color: black;
+}
+
+.justificacion{
+    display: grid;
+    margin: 2% 0 0 15%;
+}
+
+/* --------------------------------Boton--------------------------------------- */
+
+.Agregar{
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+}
+
+ .Agregar button{
+  border: 2px solid #193665;
+  background-color: #193665;
+  border-radius: 0.9em;
+  padding: 0.8em 1.2em 0.8em 1em;
+  transition: all ease-in-out 0.2s;
+  font-size: 16px;
+ }
+ 
+ .Agregar button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
+ }
+ 
+ .Agregar button:hover {
+  background-color: #274c88;
+ }
+
+ .Total-main{
+  position: relative;
+  margin: 25px 10% 0 10%;
+  display: flex;
+  justify-content: flex-end;
+  /* left: 100px; */
+  /* width: 10%; */
+}
+
+.Total-main label{
+  font-weight: bold;
+}
+
+.Total{
+  margin: 0 0 10px 24px;
+width: 10%;
+position: relative;
+font-family: Arial, sans-serif;
+font-size: 16px;
+border: 2px solid #ccc;
+border-radius: 5px;
+padding: 2px;
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+background-color: #fff;
+cursor: pointer;
+
+}
+
+/* --------------------------------Comentario--------------------------------------- */
+/* modificado, copia todo */
+.comentario{
+  justify-content: center;
+  border: 2px solid #193665;
+  background-color: #193665;
+  border-radius: 9px;
+  border-bottom-right-radius: 0px;
+  padding: 0.8em 1.2em 0.8em 1em;
+  color: #fff;
+  cursor: pointer;
+}
+
+.comentario:hover{
+  background-color: #314d7a;
+}
+
+
+#txt-area{
+  width: 500px;
+  padding: 0 5% 0 5%;
+  text-align:left;
+  overflow:hidden;
+  display:block;
+  height: auto;
+}
+
+.input-group-text{
+  padding: 8px 12px 8px 12px;
+}
+
+
+.input-group-main{
+  text-align: left;
+  width: 500px;
+  margin: 0 auto 0 auto; 
+}
+
+.input-group-min{
+  width: 300px;
+}
+
+
+
+.container span{
+ display: flex;
+ justify-content: center
+}
+
+.container{
+size: 50%;
+}
+
+.col-form-label{
+  height:10%;
+}
+
+
+
+

@@ -1,0 +1,38 @@
+<section class="main-sheet">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <img
+        style="
+          position: relative;
+          top: 2.5%;
+          left: 2%;
+          height: 3rem;
+          width: auto;
+        "
+        src="https://i.imgur.com/z3uzhCf.png"
+        alt=""
+      />
+    </div>
+    <div>
+      <header>
+        <p>Sistema de Requisiciones</p>
+      </header>
+      <ul>
+        <li id="RC"><a href="Requisiciones">Requisiciones</a></li>
+        <li id="ORD" [style.display]="Usuario.Tipo === 'Compras' || Usuario.Tipo === 'Gerente'  || Usuario.Tipo === 'Pagos'  ? 'inline' : 'none'"><a href="Ordenes">Ordenes de Compras</a></li>
+        <li id="Historial"><a href="Historial">Historial</a></li>
+        <li id="NRQ" [style.display]="Usuario.Tipo === 'Administrativo' || Usuario.Tipo === 'Gerente' || Usuario.Tipo === 'Pagos' ? 'inline' : 'none'"><a href="NuevaRequisicion">Nueva Requisicion</a></li>
+        <li id="Prov"><a href="Proveedor">Proveedores</a></li>
+        <li id="Prod"><a href="Productos">Productos</a></li>
+        <li id="Inv" [style.display]="Usuario.Tipo === 'Compras' || Usuario.Tipo ==='Gerente' || Usuario.Tipo ==='Admin' || Usuario.Tipo ==='Pagos' ? 'inline' : 'none'"><a href="Inventario">Inventario</a></li>
+        <li id="ENT" [style.display]="Usuario.Tipo === 'Compras' || Usuario.Tipo ==='Gerente' || Usuario.Tipo === 'Pagos'  ? 'inline' : 'none'"><a href="Entregas">Entregas</a></li>
+      </ul>
+    </div>
+    <div>
+      <label style="margin-right: 20px;">{{Usuario.Tipo}}</label>
+      <button><img src="https://i.imgur.com/0giEAmy.png" alt="" (click)="Logout()"></button>
+    </div>
+  </nav>
+</section>
+
+

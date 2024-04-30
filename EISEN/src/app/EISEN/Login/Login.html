@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section class="main-sheet">
+    
+        <div class="Log-in">
+                <img src="https://i.imgur.com/z3uzhCf.png" alt="" style="width: auto; height: 10vh; position: absolute; top: 5%; left: 7%;">
+                    <div class="login">
+                        <section class="form">
+                            <label style="text-align: center; font-family: Arial, sans-serif; cursor:default;" for="chk" aria-hidden="true">Sistema Requisiciones
+                            </label>
+                            <input class="input" type="text" placeholder="Usuario" required="" [(ngModel)]="Usuario.User">
+                            <input class="input" type="password" id="password" placeholder="Contraseña" required="" [(ngModel)]="Usuario.Password">
+                            <button  (click)="back()" id="toggle" style=" position: absolute; left: 225px; bottom: 90px; background-color: transparent; width: 40px;" ><img id="eye"  src="https://i.imgur.com/tyTyBZg.png" alt=""></button>
+                            <button type="submit" (click) = "Acceder()">Iniciar Sesión</button>
+                        </section>
+                    </div>
+        </div>
+    
+        <div class="image">
+            
+        </div>
+    
+    </section>
+</body>
+</html>

@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;700&display=swap');
+
+* {
+  font-family: Urbanist;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-sheet{
+  background: linear-gradient(90deg, rgba(255,255,255,1) 10%, rgba(25,54,101,1) 37%);
+  color: #FFE5B4;
+z-index: 100;
+}
+  /*-------------------------------------------------------*/
+  /* Extra */
+
+  header, nav {
+   background-color: transparent;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+nav p{
+  font-size:200%;
+}
+
+button {
+  background: none;
+  border: 0;
+  color: inherit;
+  /* cursor: default; */
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  margin-right: 20px;
+}

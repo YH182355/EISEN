@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;700&display=swap");
+
+* {
+  font-family: Urbanist;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.card {
+  margin: 25px 25% 25px 25%;
+  /* height: 190px; */
+}
+
+.card-header label {
+  margin: 0 10px 0 10px;
+}
+
+.card-header {
+  background-color: #193665;
+  color: white;
+}
+
+/* Carta que cambia con la variable Urgente */
+.card-urgente .card-header {
+  background-color: red;
+}
+
+.Fecha {
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px 0 0 0;
+}
+
+.Fecha p {
+  font-weight: bold;
+}
+
+.card-title {
+  margin: 2px 0 2px 10px;
+}
+
+.encargado {
+  display: flex;
+  align-items: center;
+}
+
+.encargado label {
+  margin: 0 0 0 10px;
+}
+
+.costo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.costo label {
+  margin: 0 10px 0 10px;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.boton {
+  display: flex;
+  justify-content: center;
+  margin: 0 10px 5px 0;
+}
+
+.boton a {
+  height: 2rem;
+  width: 8rem;
+  background-color: #193665;
+  color: white;
+}
+
+.boton a:hover {
+  background-color: #204580;
+}
+
+/* Estatus */
+
+.estatus label {
+  display: flex;
+}
+
+.estatus {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 2px 0;
+}
+
+.estatus b {
+  margin: 0 10px 0 0;
+  font-weight: bold;
+}
+
+.loader {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.circulo {
+  position: absolute;
+  border-radius: 50%;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.circulo-1 {
+  width: 10px;
+  height: 10px;
+  background: green;
+  animation-name: circle-3-animation;
+}
+
+@keyframes circle-3-animation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Cambia el valor de los Loaders mediante el estatus de la requisicion */
+.estatus-verde {
+  background-color: green;
+}
+
+.estatus-amarillo {
+  background-color: rgb(227, 218, 45);
+}
+
+.estatus-rojo {
+  background-color: red;
+}

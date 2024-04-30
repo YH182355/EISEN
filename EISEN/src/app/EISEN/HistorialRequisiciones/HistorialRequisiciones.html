@@ -1,0 +1,51 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<section>
+  <h1 style="text-align: center; margin: 2% 0 2% 0">
+    Historial de requisiciones
+  </h1>
+
+  <div class="search-container">
+    <input style="width:10%;" [(ngModel)]="Fecha1" type="date" id="search-date" title="Fecha">
+
+    <input style="width:10%;" [(ngModel)]="Fecha2" type="date" id="search-date" title="Fecha">
+
+    <button class="reiniciar" (click)="buscarReqPorRango(Fecha1, Fecha2)">
+      <p>Filtrar Fechas</p>
+    </button>
+
+
+    <button class="reiniciar" (click)="VaciarFiltros()">
+      <p>Vaciar Filtros</p>
+    </button>
+  </div>
+
+  <div class="principal">
+    
+    <table class="tablefixhead">
+      <thead>
+        <tr>
+          <th class="esquina-izq">Solicitante</th>
+          <th>Area</th>
+          <th>Fecha</th>
+          <th>Monto Total</th>
+          <th>Folio</th>
+          <th>Estatus</th>
+          <th class="esquina-der">Vista</th>
+        </tr>
+      </thead>
+
+      <tr *ngFor="let x of Requisicioness">
+        <td>{{x.Solicitante}}</td>
+        <td>{{x.AreaSolicitante}}</td>
+        <td><input type="date" disabled class="Fecha-creada" [(ngModel)]="x.Fecha"></td>
+        <td>${{x.CostoTotal}}</td>
+        <td>{{x.Folio}}</td>
+        <td>{{x.Estatus}}</td>
+        <td><button class="ver" (click)="clickRequisicion(x)">Abrir</button></td>
+      </tr>
+
+      <!-- Agrega más filas según tus productos -->
+    </table>
+  </div>
+</section>

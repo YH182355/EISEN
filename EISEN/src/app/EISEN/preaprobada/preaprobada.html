@@ -1,0 +1,138 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<section>
+
+  <h1 style="text-align: center; margin: 2% 0 0 0;">Vista {{RequisicionCompra.Folio}}</h1>
+
+  <div class="Hoja-secundaria">
+
+    <div style="display: flex; margin-top: 30px">
+      <label style="margin-left: 5%" for="">Responsable:</label>
+      <input class="Nombres" type="text" [(ngModel)]="RequisicionCompra.NombreResponsable" disabled />
+
+
+      <label class="NFecha">Fecha:</label> <input class="Fecha" type="date" [(ngModel)]="FechaReq" disabled />
+    </div>
+
+    <div class="req">
+      <label style="margin-left: 5%" for="">Solicitante:</label>
+      <input class="Nombres2" type="text" [(ngModel)]="req.Solicitante" disabled />
+
+      <label style="margin-left: 15px" for="">Area:</label>
+      <select class="areas" type="text" [(ngModel)]="Selector" disabled>
+        <option class="responsable" value="Almacen Eisen" selected>Almacen Eisen</option>
+        <option class="responsable" value="Oficina Eisen">Oficina Eisen</option>
+        <option class="responsable" value="Oficina AGM">Oficina AGM</option>
+      </select>
+    </div>
+
+
+  <div class="input-container">
+    <input type="text" id="search-bar" lowercase onfocus="" (focus)="buscador = false" class="input"
+      placeholder="Buscar..." style="color: black !important" [(ngModel)]="Buscar" />
+    <button class="search-button" type="button" (click)="filterProductosBySearchTerm()">
+      Buscar
+    </button>
+  </div>
+
+  <div *ngIf="buscador && Productos.length > 0" class="search-results">
+    <div *ngFor="let p of Productos" class="input-container">
+      <div style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        ">
+        <button class="pnombre" (click)="ProductosparaRequisicion(p)" ><p align="left">{{ p.Nombre }} -</p><p align="left" style="font-size: small; margin-left: 5px; margin-top: 3px; margin-right:auto ; font-weight: bold;">{{ p.Descripcion }} </p> <p style="font-size: small; margin-left: 5px; margin-top: 3px; font-weight: bold;"> {{p.Marca}}</p></button>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <div class="principal">
+
+    <table class="tablefixhead">
+      <thead>
+        <tr>
+          <th class="esquina-izq">Producto</th>
+
+          <th>Cantidad</th>
+          <th>Cantidad Base</th>
+          <th>Unidad</th>
+          <th>Especificaciones</th>
+          <th>Marca</th>
+          <th>Precio</th>
+          <th>Proveedor</th>
+          <th class="esquina-der"></th>
+
+        </tr>
+      </thead>
+
+      <tr *ngFor="let item of RequisicionCompra.ProductosParaRequisicion">
+        <td class="izq">{{item.Nombre}}</td>
+        <td>
+            <input type="number" class="Cantidad" style="border: solid 1px transparent; width: 70px"
+              step="{{item.CantidadBase}}" [(ngModel)]="item.Cantidad" (input)="validarNumeroStep(item, $event)" />
+        </td>
+        <td>{{item.CantidadBase}}</td>
+        <td><input disabled style="border: solid 1px transparent; width: 70px;" type="text" [(ngModel)]="item.Unidad">
+        </td>
+        <td><textarea name="" id="" cols="20" rows="2" style="border: solid 1px transparent; resize: none;" type="text" [(ngModel)]="item.Especificaciones" ></textarea></td>
+
+        <td>{{item.Marca}}</td>
+        <td>$ {{item.Precio}}</td>
+          <!-- <td>${{item.Precio * item.Cantidad // item.CantidadBase}} -->
+        <td>{{item.Proveedor}}</td>
+        <!-- <td>{{item.Estatus}}</td> -->
+        
+        <td class="der">
+            <Button style="border: none; margin-left: 10%; background-color: transparent;" (click)="borrar(item)"><img
+                src="https://i.imgur.com/tuWOvO7.png" alt=""></Button>
+          </td>
+      </tr>
+
+    </table>
+
+
+
+  </div>
+
+  <div class="Total-main">
+    <label style="margin-left: 5%" for="">Total:</label>
+    <input class="Total" type="text" [(ngModel)]="req.CostoTotal" disabled>
+  </div>
+
+  <div class="Agregar">
+    <button (click)="GuardarCambios(RequisicionCompra)">
+      <span>
+        Guardar Cambios
+      </span>
+    </button>
+  </div>
+
+  <div class="container" style="margin-left:auto; margin-right: auto !important; width: 100% !important;">
+    <div class="clearfix" style="margin-top: 5%;"></div>
+    <div class="form-group col-sm-12" style="margin-top: 1%;max-height:200px;overflow-y:scroll;"></div>
+    <label for="" class="col-form-label">Comentarios:</label>
+    <div class="input-group col-sm-12">
+      <span class="input-group-text" id="basic-addon1" style=" border-bottom-left-radius: 0px; cursor: pointer;">Comentario</span>
+      <textarea class="form-control" type="text" rows="1" name="" id="" #xCosa></textarea>
+      <button (click)="comentario(xCosa.value)" type="button" class="comentario">Comentar<i class="bi bi-chat-dots-fill"></i> </button>
+    </div>
+    <div class="input-group-text" style="background-color: #193665; color: white; border-radius: 0%;"  >
+      <span class="input-group-main" id="basic-addon1" style="font-weight: bold;"> Nombre</span>
+      <span class="input-group" id="basic-addon1" style="font-weight: bold;"> Comentario </span>
+         <span class="input-group-min" id="basic-addon1" style="font-weight: bold;;">Fecha</span>
+        <span class="input-group-min" id="basic-addon1" style="font-weight: bold;">Estatus</span>
+      </div>
+    <div class="input-group-text" style=" border-top-left-radius: 0px;  border-top-right-radius: 0%; " *ngFor="let x of RequisicionCompra.Comentarios">
+      <span class="input-group-main" id="basic-addon1">{{x.User}} </span>
+      <textarea id="txt-area" class="form-control" type="text" rows="1" name="" id="" #comenManiobra disabled>{{x.Comentario}}</textarea>
+      <span class="input-group-min" id="basic-addon1">{{x.Fecha}} </span>
+      <span class="input-group-min" id="basic-addon1">  {{x.Estatus}} </span>
+    </div>
+    <div class="clearfix" style="margin-top: 2%;"></div>
+  </div>
+
+</section>

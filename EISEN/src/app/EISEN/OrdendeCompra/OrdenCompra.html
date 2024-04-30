@@ -1,0 +1,263 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<section>
+  <h1 style="text-align: center; margin: 2% 0 0 0">Vista {{OrdendeCompra.Folio}}</h1>
+
+  <div class="Hoja-secundaria">
+    <div style="display: flex; margin-top: 30px">
+      <label style="margin-left: 5%" for="">Responsable:</label>
+      <input class="Nombres" type="text" [(ngModel)]="OrdendeCompra.NombreResponsable" disabled />
+
+      <label class="NFecha">Fecha:</label>
+      <input class="Fecha" type="date" [(ngModel)]="OrdendeCompra.Fecha" disabled />
+    </div>
+
+    <div class="req">
+      <label style="margin-left: 5%" for="">Solicitante:</label>
+      <input class="Nombres2" type="text" [(ngModel)]="OrdendeCompra.Solicitante" disabled />
+
+      <label style="margin-left: 15px" for="">Area:</label>
+      <select disabled class="areas" type="text" [(ngModel)]="OrdendeCompra.AreaSolicitante" disabled>
+        <option class="responsable" value="Almacen Eisen" selected>Almacen Eisen</option>
+        <option class="responsable" value="Oficina Eisen">Oficina Eisen</option>
+        <option class="responsable" value="Oficina AGM">Oficina AGM</option>
+      </select>
+    </div>
+
+    <div class="req">
+      <label style="margin-left: 5%" for="">Proveedor:</label>
+      <input class="Nombres3" type="text" [(ngModel)]="OrdendeCompra.Proveedor" disabled />
+
+      <label style="margin-left: 15px" for="">MetododePago:</label>
+      <select disabled class="areas" type="text" [(ngModel)]="OrdendeCompra.MetododePago" disabled>
+        <option class="m.p" value="TDC Corporativa" selected>TDC Corporativa</option>
+        <option class="m.p" value="Transferencia">Transferencia</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="principal">
+    <table class="tablefixhead">
+      <thead>
+        <tr>
+          <th class="esquina-izq">Producto</th>
+          <th>Cantidad</th>
+          <th>Cantidad Base</th>
+          <th>Unidad</th>
+          <th>Especificaciones</th>
+          <th>Marca</th>
+          <th>Precio Total</th>
+          <th class="esquina-der">Detalle</th>
+        </tr>
+      </thead>
+
+      <tr *ngFor="let producto of ord.ProductosParaRequisicion">
+        <td class="izq">{{producto.Nombre}}</td>
+        <td>
+          <input type="number" style="border: solid 1px transparent; width: 70px" step="{{producto.CantidadBase}}"
+            [(ngModel)]="producto.Cantidad" [disabled]="!habilitar" />
+        </td>
+        <td>
+          <input disabled style="border: solid 1px transparent; width: 70px" type="text"
+            [(ngModel)]="producto.CantidadBase" />
+        </td>
+        <td>
+          <input disabled style="border: solid 1px transparent; width: 70px" type="text"
+            [(ngModel)]="producto.Unidad" />
+        </td>
+
+        <td>
+          <textarea name="" id="" cols="30" rows="2" style="border: solid 1px transparent; resize: none;" type="text"
+            [(ngModel)]="producto.Especificaciones" [disabled]="!habilitar"></textarea>
+        </td>
+        <td>{{producto.Marca}}</td>
+        <td>$ {{producto.Precio * (producto.Cantidad / producto.CantidadBase)}}</td>
+        <td class="der">
+          <Button (click)="ModalEditarDatos(producto)" style="border: none; margin-left: 10%;"><img
+              src="https://i.imgur.com/mYM4yD6.png" alt=""></Button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- <div class="Total-main">
+    <label style="margin-left: 5%" for="">Total:</label>
+    <input class="Total" type="text" [(ngModel)]="OrdendeCompra.CostoTotal" disabled>
+  </div> -->
+
+
+  
+  <!-- --cambios nuevos-- -->
+
+   <div class="Archivos">
+    <div class="BotonArchivo">
+      <form class="file-upload-form">
+        <label for="file" class="file-upload-label">
+          <div class="file-upload-design">
+            <svg viewBox="0 0 640 512" height="1em">
+              <path
+                d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z">
+              </path>
+            </svg>
+            <span class="browse-button">Seleccione su Archivo</span>
+          </div>
+          <input multiple (change)="MostrarArchivos($event)" id="file" type="file" accept=".pdf, .xlsx"/>
+
+        </label>
+      </form>
+
+    </div>
+    <div class="Lista">
+      <div class="Vista">
+        <div class="col">
+          <div class="row text-center">
+            <h4>Cotizaciones Seleccionadas:</h4>
+            <div class="" style="margin-bottom: 10px;" *ngFor="let cargado of Cotizaciones">
+              <a target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                  class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z">
+                  </path>
+                </svg>{{ cargado.name }}
+              </a>
+            </div>
+            <div class="" style="margin-bottom: 10px;" *ngFor="let x of OrdendeCompra.Cotizacion">
+              <a target="_blank" (click)="DescargarArchivo(x)" style="cursor: pointer;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                  class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z">
+                  </path>
+                </svg>{{ x.substring(14, 50) }}
+              </a>
+            </div>
+          </div>
+          <div class="row text-center">
+            <h4>Comprobantes subidos:</h4>
+            <div class="" style="margin-bottom: 10px;" *ngFor="let archivo of OrdendeCompra.Comprobante">
+              <a target="_blank" (click)="DescargarArchivo(archivo)" style="cursor: pointer;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                  class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z">
+                  </path>
+                </svg>{{ archivo.substring(14, 50) }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+<!-- _________________________ -->
+
+  <div class="Agregar">
+
+    <button (click)="GuardarOrden(OrdendeCompra, true)">
+      <span>
+        Guardar Orden
+      </span>
+    </button>
+
+
+    <button [hidden]="verificarFormaDePago()"  (click)="PagarOrden(OrdendeCompra, true)"
+      style="margin-right: 10px; margin-left: 10px; background-color: rgb(26, 133, 26);border-color: transparent;"
+    >
+    <span> Pagar</span>
+   </button>
+
+  </div>
+
+
+
+  <div class="container" style="margin-left:auto; margin-right: auto !important; width: 100% !important;">
+    <div class="clearfix" style="margin-top: 5%;"></div>
+    <div class="form-group col-sm-12" style="margin-top: 1%;max-height:200px;overflow-y:scroll;"></div>
+    <label for="" class="col-form-label">Comentarios:</label>
+    <div class="input-group col-sm-12">
+      <span class="input-group-text" id="basic-addon1" style=" border-bottom-left-radius: 0px; cursor: pointer;">Comentario</span>
+      <textarea class="form-control" type="text" rows="1" name="" id="" #xCosa></textarea>
+      <button (click)="comentario(xCosa.value)" type="button" class="comentario">Comentar<i class="bi bi-chat-dots-fill"></i> </button>
+    </div>
+    <div class="input-group-text" style="background-color: #193665; color: white; border-radius: 0%;"  >  
+      <span class="input-group-main" id="basic-addon1" style="font-weight: bold;"> Nombre</span> 
+      <span class="input-group" id="basic-addon1" style="font-weight: bold;"> Comentario </span> 
+         <span class="input-group-min" id="basic-addon1" style="font-weight: bold;;">Fecha</span> 
+        <span class="input-group-min" id="basic-addon1" style="font-weight: bold;">Estatus</span>
+      </div>
+    <div class="input-group-text" style=" border-top-left-radius: 0px;  border-top-right-radius: 0%; " *ngFor="let x of OrdendeCompra.Comentarios"> 
+      <span class="input-group-main" id="basic-addon1">{{x.User}} </span>
+      <textarea id="txt-area" class="form-control" type="text" rows="1" name="" id="" #comenManiobra disabled>{{x.Comentario}}</textarea>
+      <span class="input-group-min" id="basic-addon1">{{x.Fecha}} </span>
+      <span class="input-group-min" id="basic-addon1">  {{x.Estatus}} </span>
+    </div>
+    <div class="clearfix" style="margin-top: 2%;"></div>
+  </div>
+
+</section>
+
+
+
+
+
+<section id="myModal" class="modal">
+  <section class="modal-content" *ngFor="let items of VerDetallesProducto">
+    <span class="close" (click)="cerrarModal()" style="color: red;">&times;</span>
+    <h2>Detalles</h2>
+
+    <div class="arriba">
+      <label for="nombre">Nombre:</label>
+      <input disabled style="width: 100%;" type="text" id="nombre" name="nombre" [(ngModel)]="items.Nombre"><br>
+
+      <label for="proveedor">Proveedor:</label>
+      <input disabled class="modal-opt" type="text" id="proveedor" name="proveedor" [(ngModel)]="items.Proveedor"><br>
+
+
+    </div>
+
+    <div class="form">
+
+      <div>
+
+        <label for="">Unidad Base:</label>
+        <input disabled class="modal-opt" type="text" id="Unidad-Base" name="Unidad-Base" [(ngModel)]="items.Unidad"><br>
+
+        <label for="marca">Marca:</label>
+        <input disabled class="modal-opt" type="text" id="marca" name="marca" [(ngModel)]="items.Marca"><br>
+
+      </div>
+
+
+      <div>
+
+        <label for="">Categoría:</label>
+        <select class="opt" type="text" id="Categorias" disabled name="Categorias">
+          <option value="Insumos">Insumos</option>
+          <option value="Almacen">Almacén</option>
+          <option value="Papeleria">Papeleria</option>
+          <option value="Limpieza">Limpieza</option>
+          <option value="Mobiliario">Mobiliario</option>
+          <option value="Uniformes">Uniformes</option>
+          <option value="Telefonia">Telefonia</option>
+          <option value="Equipos Electronicos">Equipos Electrónicos</option>
+          <option value="Medicamentos">Medicamentos</option>
+        </select><br>
+
+        <label for="">Cantidad Base:</label>
+        <input disabled class="modal-opt" type="text" id="Cantidad-base" name="Cantidad-base"
+          [(ngModel)]="items.CantidadBase"><br>
+
+
+      </div>
+
+    </div>
+
+    <label for="descripcion">Descripción:</label>
+    <textarea disabled style="resize: none;" type="text" id="descripcion" cols="10" rows="3"
+      [(ngModel)]="items.Especificaciones"></textarea><br>
+
+  </section>
+
+</section>

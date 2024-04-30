@@ -1,0 +1,52 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<h1 style="text-align: center; margin: 2% 0 2% 0">Requisiciones</h1>
+
+<div class="containers">
+  <div class="derecha"></div>
+
+  <div class="izquierda"></div>
+</div>
+
+<ng-container *ngFor="let x of Requisicioness">
+  <!-- Clase que esta condicionada en el ts para que cambie cuando es urgente una requisición -->
+  <div [ngClass]="{'card-urgente': Urgente(x)}" class="card">
+    <div class="card-header">
+      <div class="Fecha">
+        <p>Fecha:</p>
+        <label>{{x.Fecha}}</label>
+      </div>
+      <div class="estatus">
+        <label style="display: flex"
+          ><b>Estatus:</b>{{x.Estatus}}
+          <div class="loader">
+            <div
+              class="circulo circulo-1"
+              [ngClass]="obtenerClaseEstatus(x.Estatus)"
+            ></div>
+          </div>
+        </label>
+
+        <label><b>Folio:</b>{{x.Folio}}</label>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="encargado">
+        <p class="card-title">Solicitante:</p>
+        <p><label>{{x.Solicitante}}</label></p>
+      </div>
+
+      <div class="encargado">
+        <p class="card-title">Area:</p>
+        <p><label>{{x.AreaSolicitante}}</label></p>
+      </div>
+
+      <div class="boton">
+        <a (click)="clickRequisicion(x)" class="btn btn-primary"
+          >Abrir Requisicion</a
+        >
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,57 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<h1 style="text-align: center; margin: 2% 0 2% 0">Ordenes de Compras</h1>
+
+<div class="containers">
+  <div class="derecha"></div>
+
+  <div class="izquierda"></div>
+</div>
+
+<ng-container *ngFor="let x of Ordeness">
+  <div class="card">
+    <div class="card-header">
+      
+      <div class="estatus">
+        <label style="display: flex"
+          ><b>Estatus:</b>{{x.Estatus}}
+          <div class="loader">
+            <div
+              class="circulo circulo-1"
+              [ngClass]="obtenerClaseEstatus(x.Estatus)"
+            ></div>
+          </div>
+        </label>
+
+        <label><b>Fecha:</b>{{x.Fecha}}</label>
+        
+      </div>
+      <div class="Fecha">
+
+        <label><b>MetododePago:</b>{{x.MetododePago}}</label>
+        <label><b>Folio:</b>{{x.Folio}}</label>
+        
+        
+        
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="encargado">
+        <label class="card-title"><b>Solicitante:</b> {{x.Solicitante}}</label>
+
+        <label class="card-title"><b>Area: </b><label style="margin-right:10px;">{{x.AreaSolicitante}}</label></label>
+      </div>
+
+      <div class="encargado">
+        <label class="card-title"><b>Proveedor:</b> {{x.Proveedor}}</label>
+      </div>
+
+      <div class="boton">
+        <a (click)="clickOrden(x)" class="btn btn-primary"
+          >Abrir Orden</a
+        >
+      </div>
+    </div>
+  </div>
+</ng-container>

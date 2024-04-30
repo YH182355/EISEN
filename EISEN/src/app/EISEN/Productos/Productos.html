@@ -1,0 +1,404 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<section>
+  <h1 style="text-align: center; margin: 2% 0 2% 0;">Catálogo de Productos</h1>
+
+  <div class="search-container">
+    <select id="Categoria" class="custom-select" (change)="ProductoCategoria($event)" [(ngModel)]="CategoriaOpcion">
+      <option class="flip-card__input" value="Categoria" disabled selected>Categoria</option>
+      <option value="Insumos">Insumos</option>
+      <option value="Almacen">Almacén</option>
+      <option value="Papeleria">Papeleria</option>
+      <option value="Limpieza">Limpieza</option>
+      <option value="Mobiliario">Mobiliario</option>
+      <option value="Uniformes">Uniformes</option>
+      <option value="Telefonia">Telefonia</option>
+      <option value="Equipos Electronicos">Equipos Electrónicos</option>
+      <option value="Medicamentos">Medicamentos</option>
+    </select>
+
+    <input type="text" id="search-bar" placeholder="Buscar..." [(ngModel)]="Buscar">
+    <button class="search-button" (click)="Buscador()">Buscar</button>
+
+    <button class="reiniciar" (click)="VaciarFiltros()">
+      <p>Vaciar Filtros</p>
+    </button>
+  
+
+    <!-- cambios boton abrir segundo modal -->
+    <button *ngIf="Usuario && (Usuario.Tipo !== 'Administrativo' && Usuario.Tipo !== 'Pagos')" class="reiniciar" id="openModal" (click)="abrirModal2()">
+      <p><img src="https://i.imgur.com/UJIrtci.png" alt="" /> Producto</p>
+    </button>
+  </div>
+
+
+
+  <div class="principal" id="principal">
+    <table class="tablefixhead">
+      <thead>
+        <tr>
+          <th class="esquina-izq">Nombre del Producto</th>
+          <th>Estatus</th>
+          <th>Unidad</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Proveedor</th>
+          <th>Categoria</th>
+          <th>Marca</th>
+          <th class="esquina-der">Acciones</th>
+        </tr>
+      </thead>
+
+      <ng-container *ngFor="let x of Productoss">
+        <tr>
+          <td>{{x.Nombre}}</td>
+          <td>{{x.Estatus}}</td>
+          <td>{{x.Unidad}}</td>
+          <td>{{x.Descripcion}}</td>
+          <td>${{x.Precio}}</td>
+          <td>{{x.Proveedor}}</td>
+          <td>{{x.Categoria}}</td>
+          <td>{{x.Marca}}</td>
+          <td>
+            <Button style="border: none; margin-left: 10%; background-color: transparent;"
+              (click)="ModalEditarDatos(x)"><img src="https://i.imgur.com/Or0fe6p.png" alt=""></Button>
+            <Button *ngIf="Usuario && (Usuario.Tipo === 'Compras' || Usuario.Tipo === 'Gerente')"
+              (click)="DetallesInventario(x)" style="border: none; margin-left: 10%; background-color: transparent;">
+              <img src="https://i.imgur.com/nP7LiDM.png" alt="">
+            </Button>
+          </td>
+        </tr>
+      </ng-container>
+      <!-- Agrega más filas según tus productos -->
+    </table>
+  </div>
+
+  <div class="Agregar" >
+    <button *ngIf="CategoriaOpcion !== 'Categoria'"  (click)="pdf()">
+        <span>
+            Convertir PDF
+        </span>
+    </button>
+</div>
+<!-- --------------------------------------PDF--------------------------------------------- -->
+  <div id="elden">
+    <div class="container" style="margin: auto;">
+
+        <div class="banner">
+            <div class="row">
+
+                <img class="logo" src="./../../../assets/EISEN/logo (2).png" alt="" style="width: 150px; height: 150px; margin-left: 50px;">
+
+                <div class="col">
+                    <div id="tit" class="row">EISEN LOGÍSTICA S.A. DE C.V.</div>
+                    <div id="tit" class="row">SISTEMA DE GESTIÓN DE LA CALIDAD</div>
+                </div>
+
+                <div class="col col-lg-2">
+
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="principal1">
+
+            <table class="tablefixhead">
+                <thead>
+                <tr class="hola">
+                    <th class="no">Nombre del Producto</th>
+                    <th class="no">Estatus</th>
+                    <th class="no">Unidad</th>
+                    <th class="no">Descripcion</th>
+                    <th class="no">Precio</th>
+                    <th class="no">Metodo Pago</th>
+                    <th class="no">Proveedor</th>
+                    <th class="no">Marca</th>
+                </tr>
+            </thead>
+            <ng-container *ngFor="let x of Productoss">
+                <tr class="adios">
+                    <td>{{x.Nombre}}</td>
+                    <td>{{x.Estatus}}</td>
+                    <td>{{x.Unidad}}</td>
+                    <td>{{x.Descripcion}}</td>
+                    <td>{{x.Precio}}</td>
+                    <td>{{x.MetodoPago}}</td>
+                    <td>{{x.Proveedor}}</td>
+                    <td>{{x.Marca}}</td>
+                 </tr>
+            </ng-container>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+</section>
+
+
+<section id="myModal" class="modal">
+  <section class="modal-content" *ngFor="let item of EditarProducto">
+    <span class="close" (click)="cerrarModal()" style="color: red;">&times;</span>
+    <h2>Editar Producto</h2>
+
+    <div class="arriba">
+      <label for="nombre">Nombre:</label>
+      <input style="width: 100%;" type="text" id="nombre" name="nombre" [(ngModel)]="item.Nombre"><br>
+
+      <div *ngIf="Usuario && Usuario.Tipo === 'Compras'">
+        <label for="proveedor">Proveedor:</label>
+        <div class="all-container-modal">
+          <div class="search-container-modal">
+            <input type="text" id="search-bar-modal" lowercase onfocus="" (focus)="buscador = false" class="input"
+              placeholder="Buscar..." [(ngModel)]="BuscarM" />
+            <button class="search-button-modal" type="button" (click)="filterProductosBySearchTerm()">
+              <img src="https://i.imgur.com/faRUO0K.png" alt="" />
+
+            </button>
+          </div>
+          <div *ngIf="buscador && Proveedor.length > 0" class="search-results-modal">
+            <div *ngFor="let p of Proveedor" class="input-container-modal">
+              <div style="
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  align-items: center;
+                ">
+                <button class="pnombre" (click)="ProveedorParaProductoact(p)">{{ p.Nombre }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form">
+      <div>
+        <label for="unidad">Unidad:</label>
+        <input class="modal-opt" type="text" id="unidad" name="unidad" [(ngModel)]="item.Unidad"><br>
+
+        <label for="cantidad">Cantidad Base:</label>
+        <input class="modal-opt" type="text" id="cantidad" name="cantidad" [(ngModel)]="item.CantidadBase"><br>
+
+        <label for="precio">Precio:</label>
+        <input class="modal-opt" type="text" id="precio" name="precio" [(ngModel)]="item.Precio"><br>
+
+
+      </div>
+
+      <div>
+
+        <label for="marca">Marca:</label>
+        <input class="modal-opt" type="text" id="marca" name="marca" [(ngModel)]="item.Marca"><br>
+
+        <label for="categoria">Categoría:</label>
+        <select class="opt" type="text" id="categoria" name="categoria" [(ngModel)]="item.Categoria" >
+          <option value="Insumos">Insumos</option>
+          <option value="Almacen">Almacén</option>
+          <option value="Papeleria">Papeleria</option>
+          <option value="Limpieza">Limpieza</option>
+          <option value="Mobiliario">Mobiliario</option>
+          <option value="Uniformes">Uniformes</option>
+          <option value="Telefonia">Telefonia</option>
+          <option value="Equipos Electronicos">Equipos Electrónicos</option>
+          <option value="Medicamentos">Medicamentos</option>
+        </select><br>
+
+        <label for="cantidad">Estatus:</label>
+        <select class="opt" type="text" id="Estatus" name="Estatus" [(ngModel)]="item.Estatus">
+          <option class="flip-card__input" value="Activo" selected>Activo</option>
+          <option value="Inactivo">Inactivo</option>
+        </select><br>
+
+      </div>
+
+    </div>
+
+    <label for="descripcion">Descripción:</label>
+    <textarea style="resize:vertical;" type="text" id="descripcion" cols="10" rows="2"
+      [(ngModel)]="item.Descripcion"></textarea><br>
+
+    <div class="boton">
+      <button class="button" (click)="GuardarCambios(item)">
+        <span class="lable">Guardar Cambios</span>
+      </button>
+
+    </div>
+
+
+  
+
+</section>
+
+</section>
+
+
+
+<!-- Nueva actualizacion -->
+<section id="myModal2" class="modal">
+  <section class="modal-content">
+    <span class="close" (click)="cerrarModal2()" style="color: red">&times;</span>
+    <h2>Agregar Nuevo Producto</h2>
+
+    <div class="arriba">
+      <label for="nombre">Nombre:</label>
+      <input style="width: 100%" type="text" id="nombre" name="nombre" [(ngModel)]="NuevoProducto.Nombre" /><br />
+
+      <label for="proveedor">Proveedor:</label>
+      <div class="all-container-modal">
+        <div class="search-container-modal">
+          <input type="text" id="search-bar-modal" lowercase onfocus="" (focus)="buscador = false" class="input"
+            placeholder="Buscar..." [(ngModel)]="BuscarM" />
+          <button class="search-button-modal" type="button" (click)="filterProductosBySearchTerm()">
+            <img src="https://i.imgur.com/faRUO0K.png" alt="" />
+
+          </button>
+        </div>
+        <div *ngIf="buscador && Proveedor.length > 0" class="search-results-modal">
+          <div *ngFor="let p of Proveedor" class="input-container-modal">
+            <div style="
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  align-items: center;
+                ">
+              <button class="pnombre" (click)="ProveedorParaProducto(p)">{{ p.Nombre }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form">
+      <div>
+        <label for="unidad">Unidad:</label>
+        <input class="modal-opt" type="text" id="unidad" name="unidad" [(ngModel)]="NuevoProducto.Unidad"><br />
+
+        <label for="cantidad">Cantidad Base:</label>
+        <input class="modal-opt" type="text" id="cantidad" name="cantidad"
+          [(ngModel)]="NuevoProducto.CantidadBase" /><br />
+
+        <label for="precio">Precio:</label>
+        <input class="modal-opt" type="number" id="precio" name="precio" max="1000"
+          [(ngModel)]="NuevoProducto.Precio"><br />
+      </div>
+
+      <div>
+        <label for="marca">Marca:</label>
+        <input class="modal-opt" type="text" id="marca" name="marca" [(ngModel)]="NuevoProducto.Marca" /><br />
+
+        <label for="categoria">Categoría:</label>
+        <select class="opt" type="text" id="categoria" name="categoria" [(ngModel)]="NuevoProducto.Categoria">
+          <option class="flip-card__input" value="Categoria" disabled selected>Categoria</option>
+          <option value="Insumos">Insumos</option>
+          <option value="Almacen">Almacén</option>
+          <option value="Papeleria">Papeleria</option>
+          <option value="Limpieza">Limpieza</option>
+          <option value="Mobiliario">Mobiliario</option>
+          <option value="Uniformes">Uniformes</option>
+          <option value="Telefonia">Telefonia</option>
+          <option value="Equipos Electronicos">Equipos Electrónicos</option>
+          <option value="Medicamentos">Medicamentos</option>
+        </select><br />
+
+        <label for="cantidad">Estatus:</label>
+        <select class="opt" type="text" id="Estatus" name="Estatus" [(ngModel)]="NuevoProducto.Estatus">
+          <option class="flip-card__input" value="Activo" selected>
+            Activo
+          </option>
+          <option value="Inactivo">Inactivo</option>
+        </select><br />
+      </div>
+    </div>
+
+    <label for="descripcion">Descripción:</label>
+    <textarea style="resize: vertical" type="text" id="descripcion" cols="10" rows="2"
+      [(ngModel)]="NuevoProducto.Descripcion"></textarea><br />
+
+    <div class="boton">
+      <button class="button" (click)="GuardarNuevoProducto()">
+        <span class="lable">Guardar Cambios</span>
+      </button>
+    </div>
+  </section>
+</section>
+
+<section id="myModal3" class="modal">
+  <section class="modal-content" >
+    <span class="close" (click)="cerrarModal3()" style="color: red;">&times;</span>
+    <h2>Inventario</h2>
+
+    <div class="arriba">
+      <label for="nombre">Nombre:</label>
+      <input disabled style="width: 100%;" type="text" id="nombre" name="nombre" [(ngModel)]="DetallesModal.Nombre"><br>
+      <!--
+      <div >
+        <label for="proveedor">Proveedor:</label>
+        <input disabled class="modal-opt" type="text" id="proveedor" name="proveedor" [(ngModel)]="DetallesModal.Proveedor"><br>
+      </div>-->
+
+
+    </div>
+
+    <div class="form">
+      <div>
+        <label for="">Cantidad:</label>
+        <input class="modal-opt" type="number" id="Cantidad" name="Cantidad" [(ngModel)]="DetallesModal.Cantidad"><br>
+
+        <label for="">Unidad Base:</label>
+        <input disabled class="modal-opt" type="text" id="Unidad-Base" name="Unidad-Base" [(ngModel)]="DetallesModal.Unidad"><br>
+
+      </div>
+
+      <div >
+        <label for="">Categoría:</label>
+        <select class="opt" type="text" id="Categorias" disabled name="Categorias" [(ngModel)]="DetallesModal.Categoria">
+          <option value="Insumos">Insumos</option>
+          <option value="Almacen">Almacén</option>
+          <option value="Papeleria">Papeleria</option>
+          <option value="Limpieza">Limpieza</option>
+          <option value="Mobiliario">Mobiliario</option>
+          <option value="Uniformes">Uniformes</option>
+          <option value="Telefonia">Telefonia</option>
+          <option value="Equipos Electronicos">Equipos Electrónicos</option>
+          <option value="Medicamentos">Medicamentos</option>
+        </select><br>
+
+        <label for="marca">Marca:</label>
+        <input class="modal-opt" type="text" id="marca" name="marca" [(ngModel)]="DetallesModal.Marca"><br>
+
+        <!--
+        <label for="">Cantidad Base:</label>
+        <input disabled class="modal-opt" type="number" id="Cantidad-base" name="Cantidad-base"
+          [(ngModel)]="DetallesModal.CantidadBase"><br>-->
+
+      </div>
+
+    </div>
+    <div class="arriba">
+      <label for="nombre">Descripcion:</label>
+      <input disabled style="width: 100%;" type="text" id="nombre" name="nombre" [(ngModel)]="DetallesModal.Descripcion"><br>
+
+    </div>
+
+    <div class="boton">
+      <button class="button" (click)="ActualizarInventario(DetallesModal)">
+        <svg class="svg-icon" width="24" viewBox="0 0 24 24" height="24" fill="none">
+          <g stroke-width="2" stroke-linecap="round" stroke="#056dfa" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="m3 7h17c.5523 0 1 .44772 1 1v11c0 .5523-.4477 1-1 1h-16c-.55228 0-1-.4477-1-1z"></path>
+            <path d="m3 4.5c0-.27614.22386-.5.5-.5h6.29289c.13261 0 .25981.05268.35351.14645l2.8536 2.85355h-10z">
+            </path>
+          </g>
+        </svg>
+        <span class="lable">Guardar</span>
+      </button>
+    </div>
+
+
+  </section>
+</section>

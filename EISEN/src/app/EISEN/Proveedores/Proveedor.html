@@ -1,0 +1,181 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<section>
+
+  <h1 style="text-align: center; margin: 2% 0 2% 0;">Proveedores</h1>
+
+
+  <div class="search-container">
+    <select id="Categoria" class="custom-select" (change)="ProveedorCategoria($event)" [(ngModel)]="CategoriaOpcion">
+      <option class="flip-card__input" value="Metodo" disabled selected>Método</option>
+      <option value="Transferencia">Transferencia</option>
+      <option value="Empresa">TDC Corporativa</option>
+    </select>
+
+    <input type="text" id="search-bar" placeholder="Buscar..." [(ngModel)]="Buscar">
+    <button class="search-button" type="button" (click)="Buscador()">Buscar</button>
+
+    <button class="reiniciar" (click)="VaciarFiltros()">
+      <p>Vaciar Filtros</p>
+    </button>
+
+
+     <button *ngIf="Usuario && (Usuario.Tipo !== 'Administrativo')" class="reiniciar" id="openModal" (click)="abrirModal2()">
+      <p><img src="https://i.imgur.com/UJIrtci.png" alt="" /> Proveedor</p>
+    </button> 
+
+  </div>
+
+  <div class="principal">
+    <table class="tablefixhead">
+      <thead>
+        <tr>
+          <th class="esquina-izq">Nombre</th>
+          <th>Razón Social</th>
+          <th>RFC</th>
+          <th>Teléfono</th>
+          <th>Método de Pago</th>
+          <th class="esquina-der">Opciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <ng-container *ngFor="let x of Proveedorr">
+          <tr>
+            <td>{{x.Nombre}}</td>
+            <td>{{x.RazonSocial}}</td>
+            <td>{{x.RFC}}</td>
+            <td>{{x.Telefono}}</td>
+            <td>{{x.MetodoPago}}</td>
+            <td>
+              <Button style="border: none; margin-left: 10%; background-color: transparent;"
+                (click)="EditarDatoss(x)"><img src="https://i.imgur.com/Or0fe6p.png" alt=""></Button>
+              <Button style="border: none; margin-left: 10%; background-color: transparent;" (click)="borrar(x)"><img
+                  src="https://i.imgur.com/tuWOvO7.png" alt=""></Button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+
+  <section id="myModal" class="modal">
+    <section class="modal-content" *ngFor="let item of EditarProvedor">
+      <span class="close" (click)="cerrarModal()" style="color: red;">&times;</span>
+      <h2>Editar Proveedor</h2>
+
+      <div class="arriba">
+        <label for="nombre">Nombre:</label>
+        <input style="width: 100%;" type="text" id="nombre" name="nombre" [(ngModel)]="item.Nombre"><br>
+
+      </div>
+
+      <div class="form">
+        <div>
+          <label for="unidad">Razon Social:</label>
+          <input class="modal-opt" type="text" id="unidad" name="unidad" [(ngModel)]="item.RazonSocial"><br>
+
+          <label for="cantidad">RFC:</label>
+          <input class="modal-opt" type="text" id="cantidad" name="cantidad" [(ngModel)]="item.RFC"><br>
+
+          <label for="marca">Teléfono:</label>
+          <input class="modal-opt" type="text" id="marca" name="marca" [(ngModel)]="item.Telefono"><br>
+        </div>
+
+        <div>
+          <label for="precio">CLABE:</label>
+          <input class="modal-opt" type="text" id="precio" name="precio" [(ngModel)]="item.CLABE"><br>
+
+          <label for="proveedor">Método de pago:</label>
+          <select class="opt" type="text" id="proveedor" name="proveedor" [(ngModel)]="item.MetodoPago">
+            <option value="Transferencia">Transferencia</option>
+            <option value="TDC Corporativa">TDC Corporativa</option>
+          </select><br>
+
+
+          <!-- <label for="categoria">Categoría:</label>
+              <select class="opt" type="text" id="categoria" name="categoria"></select><br> -->
+        </div>
+
+      </div>
+
+      <label for="descripcion">Dirección:</label>
+      <textarea type="text" id="descripcion" cols="10" rows="5" [(ngModel)]="item.Direccion"></textarea><br>
+
+      <div class="boton">
+        <button class="button" (click)="GuardarCambios(item)">
+          <svg class="svg-icon" width="24" viewBox="0 0 24 24" height="24" fill="none">
+            <g stroke-width="2" stroke-linecap="round" stroke="#056dfa" fill-rule="evenodd" clip-rule="evenodd">
+              <path d="m3 7h17c.5523 0 1 .44772 1 1v11c0 .5523-.4477 1-1 1h-16c-.55228 0-1-.4477-1-1z"></path>
+              <path d="m3 4.5c0-.27614.22386-.5.5-.5h6.29289c.13261 0 .25981.05268.35351.14645l2.8536 2.85355h-10z">
+              </path>
+            </g>
+          </svg>
+          <span class="lable">Guardar</span>
+        </button>
+      </div>
+    </section>
+  </section>
+
+  <section id="myModal2" class="modal">
+    <section class="modal-content">
+      <span class="close" (click)="cerrarModal2()" style="color: red;">&times;</span>
+      <h2>Editar Proveedor</h2>
+
+      <div class="arriba">
+        <label for="nombre">Nombre:</label>
+        <input style="width: 100%;" type="text" id="nombre" name="nombre" [(ngModel)]="NuevoProveedor.Nombre"><br>
+
+      </div>
+
+      <div class="form">
+        <div>
+          <label for="unidad">Razon Social:</label>
+          <input class="modal-opt" type="text" id="unidad" name="unidad" [(ngModel)]="NuevoProveedor.RazonSocial"><br>
+
+          <label for="cantidad">RFC:</label>
+          <input class="modal-opt" type="text" id="cantidad" name="cantidad" [(ngModel)]="NuevoProveedor.RFC"><br>
+
+          <label for="marca">Teléfono:</label>
+          <input class="modal-opt" type="text" id="marca" name="marca" [(ngModel)]="NuevoProveedor.Telefono"><br>
+        </div>
+
+        <div>
+          <label for="precio">CLABE:</label>
+          <input class="modal-opt" type="text" id="precio" name="precio" [(ngModel)]="NuevoProveedor.CLABE"><br>
+
+          <label for="proveedor">Método de pago:</label>
+          <select class="opt" type="text" id="proveedor" name="proveedor" [(ngModel)]="NuevoProveedor.MetodoPago">
+            <option value="Transferencia">Transferencia</option>
+            <option value="TDC Corporativa">TDC Corporativa</option>
+          </select><br>
+
+
+          <!-- <label for="categoria">Categoría:</label>
+              <select class="opt" type="text" id="categoria" name="categoria"></select><br> -->
+        </div>
+
+      </div>
+
+      <label for="descripcion">Dirección:</label>
+      <textarea type="text" id="descripcion" cols="10" rows="5" [(ngModel)]="NuevoProveedor.Direccion"></textarea><br>
+
+      <div class="boton">
+        <button class="button" (click)="NuevoProveedorrrr()">
+          <svg class="svg-icon" width="24" viewBox="0 0 24 24" height="24" fill="none">
+            <g stroke-width="2" stroke-linecap="round" stroke="#056dfa" fill-rule="evenodd" clip-rule="evenodd">
+              <path d="m3 7h17c.5523 0 1 .44772 1 1v11c0 .5523-.4477 1-1 1h-16c-.55228 0-1-.4477-1-1z"></path>
+              <path d="m3 4.5c0-.27614.22386-.5.5-.5h6.29289c.13261 0 .25981.05268.35351.14645l2.8536 2.85355h-10z">
+              </path>
+            </g>
+          </svg>
+          <span class="lable">Guardar</span>
+        </button>
+
+      </div>
+
+
+    </section>
+
+  </section>

@@ -1,0 +1,206 @@
+<Navbar [Usuario]="Usuario"></Navbar>
+
+<section>
+
+    <h1 style="text-align: center; margin: 2% 0 2% 0;">Inventario</h1>
+
+
+    <div class="search-container">
+        <select id="Categoria" class="custom-select" (change)="InventarioCategoria($event)"
+            [(ngModel)]="CategoriaOpcion">
+            <option class="flip-card__input" value="Categoria" disabled selected>Categoria</option>
+            <option value="Insumos">Insumos</option>
+            <option value="Almacen">Almacén</option>
+            <option value="Papeleria">Papeleria</option>
+            <option value="Limpieza">Limpieza</option>
+            <option value="Mobiliario">Mobiliario</option>
+            <option value="Uniformes">Uniformes</option>
+            <option value="Telefonia">Telefonia</option>
+            <option value="Equipos Electronicos">Equipos Electrónicos</option>
+            <option value="Medicamentos">Medicamentos</option>
+        </select>
+
+        <input type="text" id="search-bar" placeholder="Buscar..." [(ngModel)]="Buscar">
+        <button class="search-button" type="button" (click)="Buscador()">Buscar</button>
+
+        <button class="reiniciar" (click)="VaciarFiltros()">
+            <p>Vaciar Filtros</p>
+        </button>
+        <button class="reiniciar" (click)="PruebaExcel()">
+            <p>Excel</p>
+        </button>
+    </div>
+
+
+
+    <div class="principal">
+
+        <table class="tablefixhead">
+            <thead>
+                <tr>
+                    <th class="esquina-izq">Nombre del Producto</th>
+                    <th>Unidad</th>
+                    <th>Cantidad</th>
+                    <th>Categoria</th>
+                    <th>Marca</th>
+                    <th class="esquina-der">Acciones</th>
+                </tr>
+            </thead>
+            <ng-container *ngFor="let x of Inventarioo">
+                <tr>
+                    <td>{{x.Nombre}}</td>
+                    <td>{{x.Unidad}}</td>
+                    <td>{{x.Cantidad}}</td>
+                    <td>{{x.Categoria}}</td>
+                    <td>{{x.Marca}}</td>
+                    <td>
+                        <Button style="border: none; margin-left: 10%; background-color: transparent;"
+                            (click)="DetallesInventario(x)"><img src="https://i.imgur.com/mYM4yD6.png" alt=""></Button>
+                            
+                            <Button *ngIf="Usuario && (Usuario.Tipo === 'Compras' || Usuario.Tipo === 'Gerente')"
+                                style="border: none; margin-left: 10%; background-color: transparent;"
+                                (click)="Abrir(x); ModalEntrega(x)">
+                                <img src="https://i.imgur.com/nP7LiDM.png" alt="">
+                            </Button>
+
+                    
+                    </td>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+
+
+</section>
+
+
+<section id="myModal2" class="modal">
+    <section class="modal-content" *ngFor="let a of Material">
+        <span class="close" (click)="cerrarModal2()" style="color: red;">&times;</span>
+        <h2>Entrega</h2>
+
+        <div class="arriba">
+            <label for="nombre">Nombre:</label>
+            <input disabled [(ngModel)]="a.Nombre" style="width: 100%;" type="text" id="nombre" name="nombre"><br>
+
+        </div>
+
+        <div class="form">
+            <div>
+                <label for="unidad">Responsable:</label>
+                <input [(ngModel)]="Recogido.Responsable" class="modal-opt" type="text" id="Responsable" name="Responsable"
+                    disabled><br>
+
+                <label for="cantidad">Fecha:</label>
+                <input [(ngModel)]="fechaActual" class="modal-opt" type="date" id="Fecha" name="Fecha"><br>
+
+                <label for="categoria">Cantidad:</label>
+                <input [(ngModel)]="Recogido.Cantidad" min="1" max="{{a.Cantidad}}" class="modal-opt" type="number"
+                    id="Cantidad" name="Cantidad"><br>
+
+            </div>
+
+            <div>
+                <label for="precio">Recibe:</label>
+                <input [(ngModel)]="Recogido.Recibe" class="modal-opt" type="text" id="Recibe" name="Recibe"><br>
+
+                <label for="proveedor">Fecha de Entrega:</label>
+                <input [(ngModel)]="Recogido.FechaEntrega" class="modal-opt" type="date" id="F.Entrega"
+                    name="F.Entrega"><br>
+
+                <label for="precio">Inventario:</label>    
+                <input type="checkbox" class="modal-opt-check" id="Descontar" [(ngModel)]="CheckBoxValor">
+
+                
+            </div>
+
+        </div>
+
+
+
+        <div class="boton">
+            <button (click)="Entregar()" class="button">
+                <svg class="svg-icon" width="24" viewBox="0 0 24 24" height="24" fill="none">
+                    <g stroke-width="2" stroke-linecap="round" stroke="#056dfa" fill-rule="evenodd" clip-rule="evenodd">
+                        <path d="m3 7h17c.5523 0 1 .44772 1 1v11c0 .5523-.4477 1-1 1h-16c-.55228 0-1-.4477-1-1z"></path>
+                        <path
+                            d="m3 4.5c0-.27614.22386-.5.5-.5h6.29289c.13261 0 .25981.05268.35351.14645l2.8536 2.85355h-10z">
+                        </path>
+                    </g>
+                </svg>
+                <span class="lable">Guardar</span>
+            </button>
+        </div>
+
+
+    </section>
+</section>
+
+<section id="myModal" class="modal">
+    <section class="modal-content" *ngFor="let L of DetallesModal">
+        <span class="close" (click)="cerrarModal()" style="color: red;">&times;</span>
+        <h2>Detalles</h2>
+
+        <div class="arriba">
+            <label for="nombre">Nombre:</label>
+            <input disabled style="width: 100%;" type="text" id="nombre" name="nombre" [(ngModel)]="L.Nombre"><br>
+
+            <div *ngFor="let L of DetallesProductoz">
+                <label for="proveedor">Proveedor:</label>
+                <input disabled class="modal-opt" type="text" id="proveedor" name="proveedor"
+                    [(ngModel)]="L.Proveedor"><br>
+            </div>
+
+
+        </div>
+
+        <div class="form" >
+            <div>
+
+                <label for="">Cantidad:</label>
+                <input disabled class="modal-opt" type="text" id="Cantidad" name="Cantidad"
+                    [(ngModel)]="L.Cantidad"><br>
+
+                <label for="">Unidad Base:</label>
+                <input disabled class="modal-opt" type="text" id="Unidad-Base" name="Unidad-Base" [(ngModel)]="L.Unidad"><br>
+
+                <label for="marca">Marca:</label>
+                <input disabled class="modal-opt" type="text" id="marca" name="marca" [(ngModel)]="L.Marca"><br>
+
+
+
+
+            </div>
+
+
+            <div *ngFor="let X of DetallesProductoz">
+
+                <label for="">Categoría:</label>
+                <select class="opt" type="text" id="Categorias" disabled name="Categorias" [(ngModel)]="L.Categoria">
+                    <option value="Insumos">Insumos</option>
+                    <option value="Almacen">Almacén</option>
+                    <option value="Papeleria">Papeleria</option>
+                    <option value="Limpieza">Limpieza</option>
+                    <option value="Mobiliario">Mobiliario</option>
+                    <option value="Uniformes">Uniformes</option>
+                    <option value="Telefonia">Telefonia</option>
+                    <option value="Equipos Electronicos">Equipos Electrónicos</option>
+                    <option value="Medicamentos">Medicamentos</option>
+                </select><br>
+
+                <label for="">Cantidad Base:</label>
+                <input disabled class="modal-opt" type="text" id="Cantidad-base" name="Cantidad-base" [(ngModel)]="X.CantidadBase"><br>
+
+                <label for="">Fecha Ultima Requisición:</label>
+                <input disabled class="modal-opt" type="date" id="Ultima-Req" name="Ultima-Req"><br>
+
+
+            </div>
+
+        </div>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea disabled style="resize: none;" type="text" id="descripcion" cols="10" rows="3" [(ngModel)]="L.Descripcion"></textarea><br>
+
+    </section>
+</section>
